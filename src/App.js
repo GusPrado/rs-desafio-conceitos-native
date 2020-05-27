@@ -24,10 +24,15 @@ export default function App() {
 
     const response = await api.post(`repositories/${id}/like`)
 
-    const noUpdatedRepos = repos.filter(repo => !repo.id.includes(id))
-    const updateRepo = response.data
+    const newRepos = [...repos]
 
-    setRepos([updateRepo, ...noUpdatedRepos])
+    newRepos.map(repo => repo.likes += (repo.id === id ? 1 : 0))
+
+    setRepos(newRepos)
+
+    // const noUpdatedRepos = repos.filter(repo => !repo.id.includes(id))
+    // const updateRepo = response.data
+    // setRepos([updateRepo, ...noUpdatedRepos])
   }
 
   return (
