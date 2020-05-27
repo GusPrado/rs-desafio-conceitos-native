@@ -35,17 +35,18 @@ export default function App() {
       <StatusBar barStyle="light-content" backgroundColor="#7159c1" />
 
       <SafeAreaView style={styles.container}>
-        {repos.map(repository => (
-
-          <>
-            <View key={repository.id} style={styles.repositoryContainer}>
+        <FlatList 
+          data={repos}
+          keyExtractor={(repository) => repository.id}
+          renderItem={ ({item: repository}) => (
+            <View style={styles.repositoryContainer}>
               <Text style={styles.repository}>{repository.title}</Text>
               <View style={styles.techsContainer}>
-              {repository.techs.map(tech => (
-                <Text key={tech} style={styles.tech}>
-                  {tech}
-                </Text>
-              ))}
+                {repository.techs.map(tech => (
+                  <Text key={tech} style={styles.tech}>
+                    {tech}
+                  </Text>
+                ))}
               </View>
 
               <View style={styles.likesContainer}>
@@ -54,7 +55,7 @@ export default function App() {
                   // Remember to replace "1" below with repository ID: {`repository-likes-${repository.id}`}
                   testID={`repository-likes-${repository.id}`}
                 >
-                  {repository.likes} {repository.likes === 1 ? 'curtida' : 'curtidas'}
+                  {repository.likes} curtidas
                 </Text>
               </View> 
 
@@ -65,22 +66,15 @@ export default function App() {
                 testID={`like-button-${repository.id}`}
               >
                 <Text style={styles.buttonText}>Curtir</Text>
-              </TouchableOpacity>
-            </View>       
-          </> 
-        ))}
+              </TouchableOpacity> 
+            </ View>
+          )}
+        >
+        </FlatList>
       </SafeAreaView>
     </>
   );
 }
-
-{/* <FlatList
-  data={repos}
-  keyExtractor={repository => repository.id}
-  renderItem={ repository => (
-    <Text style={styles.repository}>{repository.title}</Text>
-  )}
-/> */}
 
 const styles = StyleSheet.create({
   container: {
